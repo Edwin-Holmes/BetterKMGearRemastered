@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redxml>
+    <definitions>
+        <abilities>
+		<!-- ARMOR WITCHER -->
+			<ability name="Starting Armor 1 _Stats" on_conflict="replace">
+				<weight							type="base"	min="8.0"				/>
+				<quality						type="add"	min="5"		max="5"		/>
+				<armor							type="base" min="30"	max="30"	/>
+				<slashing_resistance_perc		type="base" min="0.18"				/>
+				<bludgeoning_resistance_perc	type="base" min="0.12"				/>
+				<piercing_resistance_perc		type="base"	min="0.12"				/>
+				<rending_resistance_perc		type="base" min="0.18"				/>
+				<elemental_resistance_perc		type="base" min="0.18"				/>
+			</ability>
+		</abilities>
+
+		<items>
+		<!-- ARMOR STARTING -->
+			<item
+				name							="Starting Armor 1"
+				on_conflict                     ="extend"
+				enhancement_slots				="2"
+			>
+                <tags>SetBonusPiece, KMset,
+                </tags>
+			</item>
+		</items>
+	</definitions>
+</redxml>

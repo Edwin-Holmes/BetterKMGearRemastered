@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redxml>
+    <definitions>
+        <abilities>
+		<!-- Starter pants -->
+			<ability name="Starting Pants _Stats" on_conflict="replace">
+				<weight 						type="base" min="2.5" 				/>
+				<quality 						type="add" 	min="5" 	max="5"		/>
+				<armor 							type="base" min="10" 	max="10" 	/>
+				<slashing_resistance_perc		type="base"	min="0.04"				/>
+				<piercing_resistance_perc		type="base"	min="0.02"				/>
+				<bludgeoning_resistance_perc	type="base"	min="0.02"				/>
+				<rending_resistance_perc		type="base"	min="0.04"				/>
+				<elemental_resistance_perc		type="base"	min="0.04"				/>
+			</ability>
+		</abilities>
+
+		<items>
+		<!-- Starting pants -->
+			<item
+				name							="Starting Pants"
+				on_conflict                     ="extend"
+				localisation_key_name			="item_name_pants_starting_km"
+			>
+                <tags>SetBonusPiece, KMset
+                </tags>
+			</item>
+		</items>
+	</definitions>
+</redxml>	

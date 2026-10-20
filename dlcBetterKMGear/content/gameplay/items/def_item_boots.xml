@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redxml>
+    <definitions>
+        <abilities>
+		<!-- BOOTS STARTING -->
+			<ability name="Starting Boots _Stats" on_conflict="replace">
+				<weight							type="base"	min="2.0"				/>
+				<quality						type="add"	min="5"		max="5"		/>
+				<armor							type="base"	min="10"	max="10"	/>
+				<slashing_resistance_perc		type="base"	min="0.02"				/>
+				<piercing_resistance_perc		type="base"	min="0.01"				/>
+				<bludgeoning_resistance_perc	type="base"	min="0.01"				/>
+				<rending_resistance_perc		type="base"	min="0.02"				/>
+				<elemental_resistance_perc		type="base"	min="0.02"				/>
+			</ability>
+		</abilities>
+
+		<items>
+		<!-- Starting boots-->
+			<item
+				name							="Starting Boots"
+				on_conflict                     ="extend"
+				localisation_key_name			="item_name_boots_starting_km"
+			>
+			</item>
+		</items>
+    </definitions>
+</redxml>

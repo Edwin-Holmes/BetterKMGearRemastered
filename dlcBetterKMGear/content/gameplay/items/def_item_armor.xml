@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redxml>
+    <definitions>
+        <abilities>
+        <!-- ARMOR STARTING -->
+            <ability name="Starting Armor _Stats" on_conflict="replace">
+                <weight                         type="base" min="6.0"                 />
+                <quality                        type="add"  min="5"     max="5"       />
+                <armor                          type="base" min="20"    max="20"      />
+                <slashing_resistance_perc       type="base" min="0.12"                />
+                <piercing_resistance_perc       type="base" min="0.09"                />
+                <bludgeoning_resistance_perc    type="base" min="0.09"                />
+                <rending_resistance_perc        type="base" min="0.12"                />
+                <elemental_resistance_perc      type="base" min="0.12"                />
+            </ability>
+        </abilities>
+
+        <items>
+        <!-- ARMOR STARTING -->
+            <item
+                name="Starting Armor"
+                on_conflict="extend"
+                enhancement_slots="1"
+            >
+            </item>
+        </items>
+    </definitions>
+</redxml>

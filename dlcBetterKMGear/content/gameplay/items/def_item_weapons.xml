@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redxml>
+    <definitions>
+        <abilities>
+			<ability name="Long Steel Sword _Stats" on_conflict="replace">
+				<weight							type="base"	min="4.5"				/>
+				<SlashingDamage 				type="base"	min="50" 	max="50"	/>
+				<quality						type="add"	min="5"					/>
+				<SilverDamage					type="base"	min="1"					/>
+				<armor_reduction				type="base"	min="25"				/>
+				<critical_hit_chance			type="add"	min="0.05"				/>
+				<critical_hit_damage_bonus		type="add"	min="0.10"				/>
+			</ability>
+
+			<ability name="Witcher Silver Sword _Stats" on_conflict="replace">
+				<weight							type="base"	min="4.5"				/>
+				<quality						type="add"	min="5"		max="5"		/>
+				<SlashingDamage 				type="base"	min="1"					/>
+				<SilverDamage 					type="base"	min="150" 	max="150"	/>
+				<armor_reduction				type="base"	min="25"				/>
+				<critical_hit_chance			type="add"	min="0.05"				/>
+				<critical_hit_damage_bonus		type="add"	min="0.10"				/>
+			</ability>
+		</abilities>
+
+		<items>
+		<!-- Steel swords-->
+			<item
+				name							="Long Steel Sword"
+				on_conflict                      ="extend"
+				enhancement_slots				="1"
+				localisation_key_name			="item_name_steel_sword_km" 
+			>
+			</item>
+
+		<!-- SILVER -->
+			<item
+				name							="Witcher Silver Sword"
+				on_conflict                      ="extend"
+				enhancement_slots				="1"
+				localisation_key_name			="item_name_silver_sword_km" 
+			>
+			</item>
+		</items>
+	</definitions>
+</redxml>

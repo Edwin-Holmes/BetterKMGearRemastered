@@ -1,0 +1,12 @@
+;meta[language=en]
+;meta[version=164]
+; id      |key(hex)|key(str)| text
+2113849000|        ||This string is accessible only by its id 2113849000
+2113849001||item_name_boots_starting_km|Kaer Morhen Boots
+2113849002|e1733c19||Kaer Morhen Armor
+2113849003||item_name_gloves_starting_km|Kaer Morhen Gauntlets
+2113849004||item_name_pants_starting_km|Kaer Morhen Trousers
+2113849005||item_name_steel_sword_km|Kaer Morhen Steel Sword
+2113849006||item_name_silver_sword_km|Kaer Morhen Silver Sword
+2113849007|e1733c18||Kaer Morhen Armor (Worn)
+2113849008||tooltip_set_bonus_kmset|Increases <font color="#72E033">Toxicity</font> damage threshold by +25%
