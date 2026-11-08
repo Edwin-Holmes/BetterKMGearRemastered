@@ -251,7 +251,6 @@ enum EItemSetType {
     var currentTox, maxTox, toxPct, finalBonus: float;
 
     finalDamage = wrappedMethod(dmgInfo, powerMod);
-    LogChannel('ViperSet', "Initial Damage: " + finalDamage);
 
     if (playerAttacker && finalDamage > 0.f) {
         wp = GetWitcherPlayer();
@@ -270,7 +269,6 @@ enum EItemSetType {
                    }
 
                 finalDamage *= (1.0f + finalBonus);
-                LogChannel('ViperSet', "Tox Pct: " + (toxPct * 100.0f) + "% | Bonus Applied: " + (finalBonus * 100.0f) + "% | Final Damage: " + finalDamage);
             }
         }
     }
@@ -284,7 +282,6 @@ enum EItemSetType {
     var currentTox, maxTox, toxPct, finalBonus: float;
 
     retVal = wrappedMethod(signSkill);
-    LogChannel('ViperSet', "Initial spellpower: " + retVal.valueMultiplicative);
 
     if (IsSetBonusActive(EISB_Viper_2)) {
         currentTox = GetStat(BCS_Toxicity);
@@ -300,7 +297,6 @@ enum EItemSetType {
                }
 
             retVal.valueMultiplicative += finalBonus;
-            LogChannel('ViperSet', "Tox Pct: " + (toxPct * 100.0f) + "% | Bonus Applied: " + (finalBonus * 100.0f) + "% | Final Spellpower: " + retVal.valueMultiplicative);
         }
     }
 
