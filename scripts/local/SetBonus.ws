@@ -251,21 +251,16 @@ enum EItemSetType {
     var currentTox, maxTox : float;
 
     finalDamage = wrappedMethod(dmgInfo, powerMod);
-    LogChannel('KMGear', "Vanilla CalculateDamage() captured");
 
     if (playerAttacker && finalDamage > 0.f) {
         wp = GetWitcherPlayer();
 
         if (wp.IsSetBonusActive(EISB_Viper_2)) {
-            LogChannel('KMGear', "Viper Bonus 2 Active");
             currentTox = wp.GetStat(BCS_Toxicity);
             maxTox = wp.GetStatMax(BCS_Toxicity);
-            LogChannel('KMGear', "Tox % = " + (currentTox / maxTox));
 
             if ((currentTox / maxTox) >= 0.80f) {   // Threshold 
-                LogChannel('KMGear', "Bonus damage: Initial result = " + finalDamage);
-                finalDamage *= 1.05f;               // Damage boost
-                LogChannel('KMGear', "Bonus damage: Modified result = " + finalDamage);     
+                finalDamage *= 1.05f;               // Damage boost    
             }
         }
     }
@@ -274,16 +269,18 @@ enum EItemSetType {
 }
 
 // Bonus sign intensity
-@wrapMethod(W3PlayerWitcher) function GetPowerStatValue(stat : ECharacterPowerStats, optional abilityName : name, optional ignoreDeath : bool) : SAbilityAttributeValue {
+@wrapMethod(W3PlayerWitcher) function GetTotalSignSpellPower(signSkill : ESkill) : SAbilityAttributeValue {
     var retVal : SAbilityAttributeValue;
+    var currentTox, maxTox : float;
 
-    retVal = wrappedMethod(stat, abilityName, ignoreDeath);
+    retVal = wrappedMethod(signSkill);
 
-    if (stat == CPS_SpellPower) {
-        if (IsSetBonusActive(EISB_Viper_2)) {
-            LogChannel('KMGear', "Bonus intensity: Initial value = " + retVal.valueMultiplicative);
-            retVal.valueMultiplicative += 0.05f;
-            LogChannel('KMGear', "Bonus intensity: Modified value = " + retVal.valueMultiplicative);
+    if (IsSetBonusActive(EISB_Viper_2)) {
+        currentTox = GetStat(BCS_Toxicity);
+        maxTox = GetStatMax(BCS_Toxicity);
+
+        if ((currentTox / maxTox) >= 0.80f) {   // Threshold check
+            retVal.valueMultiplicative += 0.05f; // Sign Intensity boost
         }
     }
 
