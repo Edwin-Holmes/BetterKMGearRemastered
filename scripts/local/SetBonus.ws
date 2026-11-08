@@ -248,9 +248,10 @@ enum EItemSetType {
 @wrapMethod(W3DamageManagerProcessor) function CalculateDamage(dmgInfo : SRawDamage, powerMod : SAbilityAttributeValue) : float {
     var finalDamage: float;
     var wp: W3PlayerWitcher;
-    var currentTox, maxTox : float;
+    var currentTox, maxTox, toxPct, finalBonus: float;
 
     finalDamage = wrappedMethod(dmgInfo, powerMod);
+    LogChannel('ViperSet', "Initial Damage: " + finalDamage);
 
     if (playerAttacker && finalDamage > 0.f) {
         wp = GetWitcherPlayer();
@@ -259,8 +260,17 @@ enum EItemSetType {
             currentTox = wp.GetStat(BCS_Toxicity);
             maxTox = wp.GetStatMax(BCS_Toxicity);
 
-            if ((currentTox / maxTox) >= 0.80f) {   // Threshold 
-                finalDamage *= 1.05f;               // Damage boost    
+            if (maxTox > 0.0f && currentTox > 0.0f) {
+                toxPct = currentTox / maxTox;
+
+                    if (toxPct < 0.66f) {
+                        finalBonus = (toxPct / 0.66f) * 0.10f;
+                    } else {
+                        finalBonus = 0.10f;
+                   }
+
+                finalDamage *= (1.0f + finalBonus);
+                LogChannel('ViperSet', "Tox Pct: " + (toxPct * 100.0f) + "% | Bonus Applied: " + (finalBonus * 100.0f) + "% | Final Damage: " + finalDamage);
             }
         }
     }
@@ -270,17 +280,27 @@ enum EItemSetType {
 
 // Bonus sign intensity
 @wrapMethod(W3PlayerWitcher) function GetTotalSignSpellPower(signSkill : ESkill) : SAbilityAttributeValue {
-    var retVal : SAbilityAttributeValue;
-    var currentTox, maxTox : float;
+    var retVal: SAbilityAttributeValue;
+    var currentTox, maxTox, toxPct, finalBonus: float;
 
     retVal = wrappedMethod(signSkill);
+    LogChannel('ViperSet', "Initial spellpower: " + retVal.valueMultiplicative);
 
     if (IsSetBonusActive(EISB_Viper_2)) {
         currentTox = GetStat(BCS_Toxicity);
         maxTox = GetStatMax(BCS_Toxicity);
 
-        if ((currentTox / maxTox) >= 0.80f) {   // Threshold check
-            retVal.valueMultiplicative += 0.05f; // Sign Intensity boost
+        if (maxTox > 0.0f && currentTox > 0.0f) {
+            toxPct = currentTox / maxTox;
+
+                if (toxPct < 0.66f) {
+                    finalBonus = (toxPct / 0.66f) * 0.10f;
+                } else {
+                    finalBonus = 0.10f;
+               }
+
+            retVal.valueMultiplicative += finalBonus;
+            LogChannel('ViperSet', "Tox Pct: " + (toxPct * 100.0f) + "% | Bonus Applied: " + (finalBonus * 100.0f) + "% | Final Spellpower: " + retVal.valueMultiplicative);
         }
     }
 
