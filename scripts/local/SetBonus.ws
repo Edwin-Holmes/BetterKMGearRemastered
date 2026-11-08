@@ -14,7 +14,7 @@ enum EItemSetType {
 
     ret = wrappedMethod();
 
-    if (this.IsSetBonusActive(EISB_KM)) {
+    if (this.IsSetBonusActive(EISB_KM) || this.IsSetBonusActive(EISB_Viper_1)) {
         ret += 0.25;
     }
 
@@ -176,6 +176,22 @@ enum EItemSetType {
     return wrappedMethod(bonus);
 }
 
+@wrapMethod(W3PlayerWitcher) function GetSetBonusStatus(item: SItemUniqueId, out desc1, desc2: string, out isActive1, isActive2: bool): EItemSetType {
+    var setType: EItemSetType;
+
+    setType = wrappedMethod(item, desc1, desc2, isActive1, isActive2);
+
+    if (setType == EIST_Viper) {
+        desc1 = GetLocStringByKeyExt("tooltip_set_bonus_viper1");
+        isActive1 = this.IsSetBonusActive(EISB_Viper_1);
+
+        desc2 = GetLocStringByKeyExt("tooltip_set_bonus_viper2");
+        isActive2 = this.IsSetBonusActive(EISB_Viper_2);
+    }
+
+    return setType;
+}
+
 @wrapMethod(W3PlayerWitcher) function GetSetBonusTooltipDescription(bonus: EItemSetBonus): string {
     if (bonus == EISB_Viper_1) {
         return GetLocStringByKeyExt("tooltip_set_bonus_viper1");
@@ -226,4 +242,50 @@ enum EItemSetType {
     }
 
     return wrappedMethod(itemId, itemInvComponent, flashDataObj);
+}
+
+// Bonus damage over threshold
+@wrapMethod(W3DamageManagerProcessor) function CalculateDamage(dmgInfo : SRawDamage, powerMod : SAbilityAttributeValue) : float {
+    var finalDamage: float;
+    var wp: W3PlayerWitcher;
+    var currentTox, maxTox : float;
+
+    finalDamage = wrappedMethod(dmgInfo, powerMod);
+    LogChannel('KMGear', "Vanilla CalculateDamage() captured");
+
+    if (playerAttacker && finalDamage > 0.f) {
+        wp = GetWitcherPlayer();
+
+        if (wp.IsSetBonusActive(EISB_Viper_2)) {
+            LogChannel('KMGear', "Viper Bonus 2 Active");
+            currentTox = wp.GetStat(BCS_Toxicity);
+            maxTox = wp.GetStatMax(BCS_Toxicity);
+            LogChannel('KMGear', "Tox % = " + (currentTox / maxTox));
+
+            if ((currentTox / maxTox) >= 0.80f) {   // Threshold 
+                LogChannel('KMGear', "Bonus damage: Initial result = " + finalDamage);
+                finalDamage *= 1.05f;               // Damage boost
+                LogChannel('KMGear', "Bonus damage: Modified result = " + finalDamage);     
+            }
+        }
+    }
+
+    return finalDamage;
+}
+
+// Bonus sign intensity
+@wrapMethod(W3PlayerWitcher) function GetPowerStatValue(stat : ECharacterPowerStats, optional abilityName : name, optional ignoreDeath : bool) : SAbilityAttributeValue {
+    var retVal : SAbilityAttributeValue;
+
+    retVal = wrappedMethod(stat, abilityName, ignoreDeath);
+
+    if (stat == CPS_SpellPower) {
+        if (IsSetBonusActive(EISB_Viper_2)) {
+            LogChannel('KMGear', "Bonus intensity: Initial value = " + retVal.valueMultiplicative);
+            retVal.valueMultiplicative += 0.05f;
+            LogChannel('KMGear', "Bonus intensity: Modified value = " + retVal.valueMultiplicative);
+        }
+    }
+
+    return retVal;
 }
